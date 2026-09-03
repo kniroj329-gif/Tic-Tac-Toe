@@ -1,3 +1,4 @@
+#creating board
 black_back = ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"]
 black_pawns = ["♟", "♟", "♟", "♟", "♟", "♟", "♟", "♟"]
 white_back = ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"]
@@ -15,15 +16,6 @@ board = [
 
 n = 8
 letters ="abcdefgh"
-# for i in range(n):
-#     print(8-i,end="  ")
-#     for j in range(n):
-#         print(board[i][j],end="  ")
-#     print()
-# print("   ",end="")
-# for j in range(n):
-#     print(letters[j],end="  ")
-
 #created a function for displayinng board
 def display_board (board):
     for i in range(n):
@@ -34,16 +26,34 @@ def display_board (board):
     print("   ",end="")
     for j in range(n):
         print(letters[j],end="  ")
+#displaying the board
+display_board(board)
 #moving pawn
 def move(board,st_row,st_column,end_row,end_column):
-    board[end_row][end_column] = board[st_row][st_column]
-    board[st_row][st_column] = "."
+     piece = board[st_row][st_column]
+     if piece == "♙":
+         if ((st_row == 6 and end_row == st_row -2) or  (end_row == st_row -1)) and end_column == st_column:
+             board[end_row][end_column] = piece
+             board[st_row][st_column] = "."
+         else:
+          print("invalid move")   
 
-move(board,1,1,2,1,)
+#conoverting position
+def convert_position(position):
+    column = letters.index(position[0])
+    row = 8-int(position[1])
+    return row, column 
+
+#getting input to move the pieces
+start = ((input("\nenter starting square : ")))
+st_row, st_column = convert_position(start)
+end = (input("enter ending square : "))
+end_row, end_column = convert_position(end)
+move(board,st_row,st_column,end_row,end_column)
 display_board(board)
-# board[2][1] = board[1][1]
-# board[1][1] = "."
-# display_board(board)
+
+
+
 
 
 
