@@ -3,6 +3,7 @@ black_back = ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"]
 black_pawns = ["♟", "♟", "♟", "♟", "♟", "♟", "♟", "♟"]
 white_back = ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"]
 white_pawns = ["♙", "♙", "♙", "♙", "♙", "♙", "♙", "♙"]
+black_pieces = ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜", "♟"]
 board = [ 
     black_back,
     black_pawns,
@@ -32,12 +33,18 @@ display_board(board)
 def move(board,st_row,st_column,end_row,end_column):
      piece = board[st_row][st_column]
      if piece == "♙":
-         if ((st_row == 6 and end_row == st_row -2) or  (end_row == st_row -1)) and end_column == st_column:
-             board[end_row][end_column] = piece
-             board[st_row][st_column] = "."
+         #for normal forward
+         if ((st_row == 6 and end_row == st_row -2 and board[st_row-1][st_column]==".") or  (end_row == st_row -1)) and end_column == st_column and board[end_row][end_column]==".":
+                       board[end_row][end_column] = piece
+                       board[st_row][st_column] = "."
+        #for diagonal capture
+         elif board[end_row][end_column] in black_pieces:
+            if end_row == st_row -1 and end_column == st_column-1 or end_column == st_column:
+                 board[end_row][end_column] = piece
+                 board[st_row][st_column] = "."
          else:
           print("invalid move")   
-
+     
 #conoverting position
 def convert_position(position):
     column = letters.index(position[0])
